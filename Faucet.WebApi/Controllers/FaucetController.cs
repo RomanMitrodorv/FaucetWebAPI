@@ -27,7 +27,14 @@ namespace Faucet.WebApi.Controllers
         {
             var ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
 
-            await _faucetService.Execute(address, ip.ToString());
+            try
+            {
+                await _faucetService.Execute(address, ip.ToString());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok();
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Faucet.WebApi.Services
 {
@@ -39,6 +40,7 @@ namespace Faucet.WebApi.Services
                 _userTransactionContext.SaveChanges();
 
             }
+            else throw new TransactionException("You have already made a transaction today");
         }
     }
 }
